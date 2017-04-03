@@ -8,6 +8,8 @@ import java.util.Scanner;
 /**
  * Created by Ryan on 4/3/2017.
  */
+/** This main file is the file you want to run. It parses the input file given and forwards the inputs to the actual program.
+ *  The inputs into the program should be put into a file called input.txt put into the same folder as the program.**/
 public class Main {
     public static void main(String[] args) {
         File newFile = new File("input.txt");
