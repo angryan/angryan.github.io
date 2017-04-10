@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * Created by Ryan on 3/28/2017.
  */
+/** Note: This is a recursive solution **/
 public class Grid {
     int n;
     int m;
@@ -45,7 +46,10 @@ public class Grid {
             return 0;
         } else if (jumpend(n, m)) { /**Checks if the point is the end of a jump**/
             ArrayList<Integer> a = (ArrayList<Integer>) correspondingJumpStart(n, m);
-            if (jumpstart(n - 1, m)) { /**Checks if there is a starting jump point next to or above it**/
+            if (jumpstart(n - 1, m) && jumpstart(m, n - 1)) {
+                memo.put(point, calculate(a.get(0), a.get(1)));
+                return memo.get(point);
+            } else if (jumpstart(n - 1, m)) { /**Checks if there is a starting jump point next to or above it**/
                 memo.put(point, calculate(a.get(0), a.get(1)) + calculate(n, m - 1));
                 return memo.get(point);
             } else if (jumpstart(n, m - 1)) {
@@ -60,7 +64,10 @@ public class Grid {
             return 0;
         }
         else {
-            if (jumpstart(n - 1, m)) {/**Checks if there is a starting jump point next to or above it**/
+            if (jumpstart(n - 1, m) && jumpstart(m, n - 1)) {
+                memo.put(point, 0);
+                return memo.get(point);
+            } else if (jumpstart(n - 1, m)) {/**Checks if there is a starting jump point next to or above it**/
                 memo.put(point, calculate(n, m - 1));
                 return memo.get(point);
             } else if (jumpstart(n, m - 1)) {
@@ -80,7 +87,7 @@ public class Grid {
         return false;
     }
 
-    public boolean jumpend(int n, int m) {/**Helper function: return whether or not a point ia the end of a jump.**/
+    private boolean jumpend(int n, int m) {/**Helper function: return whether or not a point ia the end of a jump.**/
         ArrayList<Integer> endpoint = new ArrayList<>();
         endpoint.add(0, n);
         endpoint.add(1, m);
@@ -107,5 +114,17 @@ public class Grid {
         } catch (StackOverflowError e) {
             throw new StackOverflowError("Invalid jumping points.");
         }
+    }
+
+    public void setBlockedPoints(HashMap blocked) { /** Setter method for setting blocked points.**/
+        this.blockedpoints = blocked;
+    }
+
+    public void setJumpsStartEnd(HashMap jumpsStartEnd) { /** Setter method for setting the first set of jump points.**/
+        this.jumpsStartEnd = jumpsStartEnd;
+    }
+
+    public void setJumpsEndStart(HashMap jumpsEndStart) { /** Setter method for the second set.**/
+        this.jumpsEndStart = jumpsEndStart;
     }
 }

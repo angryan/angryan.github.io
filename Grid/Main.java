@@ -9,10 +9,11 @@ import java.util.Scanner;
  * Created by Ryan on 4/3/2017.
  */
 /** This main file is the file you want to run. It parses the input file given and forwards the inputs to the actual program.
- *  The inputs into the program should be put into a file called input.txt put into the same folder as the program.**/
+ *  The inputs into the program should be put into a file called input.txt put into the same folder as the program.'
+ *  HOW TO RUN: Create a file called input.txt that is in the same format as the examples given. Put it in the same folder as Main.java. Then run.**/
 public class Main {
     public static void main(String[] args) {
-        File newFile = new File("input.txt");
+        File newFile = new File("input.txt");/** Reads the file **/
         try {
             Scanner s = new Scanner(newFile);
             String dimensions = s.nextLine();
@@ -21,7 +22,7 @@ public class Main {
             HashMap<Integer, List<Integer>> blocked = new HashMap<>();
             String blockedpoints = s.nextLine();
             ArrayList<Integer> digits = new ArrayList<>();
-            for (int i = 0; i < blockedpoints.length(); i++) {
+            for (int i = 0; i < blockedpoints.length(); i++) { /**Reads the blocked points from the file and puts it into a variable */
                 char current = blockedpoints.charAt(i);
                 if (Character.isDigit(current)) {
                     int digit = Character.getNumericValue(current);
@@ -37,12 +38,12 @@ public class Main {
                     blocked.put(digits.get(i), newList);
                 }
             }
-            puzzle.blockedpoints = blocked;
+            puzzle.setBlockedPoints(blocked); /** Sets the blocked points **/
             HashMap<List<Integer>, List<Integer>> StartEnd = new HashMap<>();
             HashMap<List<Integer>, List<Integer>> EndStart = new HashMap<>();
             digits.clear();
             String jumpPoints = s.nextLine();
-            for (int i = 0; i < jumpPoints.length(); i++) {
+            for (int i = 0; i < jumpPoints.length(); i++) { /**Reads the jumping points**/
                 char current = jumpPoints.charAt(i);
                 if (Character.isDigit(current)) {
                     int digit = Character.getNumericValue(current);
@@ -59,10 +60,10 @@ public class Main {
                 StartEnd.put(start, end);
                 EndStart.put(end, start);
             }
-            puzzle.jumpsEndStart = EndStart;
-            puzzle.jumpsStartEnd = StartEnd;
+            puzzle.setJumpsEndStart(EndStart);/**Sets the jumping points.**/
+            puzzle.setJumpsStartEnd(StartEnd);
             System.out.println(puzzle.ways());
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) { /**Catches the exception that the file does not exist**/
             System.out.println("Cannot find file");
         }
     }
